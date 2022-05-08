@@ -1,0 +1,29 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'SonarQubeServer'
+    scannerMode: 'Other'
+
+ - task: SonarQubeAnalyze@5
+ 
+ - task: sonar-buildbreaker@8
+   inputs:
+     SonarQube: 'SonarQubeServer'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
